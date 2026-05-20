@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #0B0F19;
+  color: white;
+  overflow-x: hidden;
+}
+
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.glow-btn {
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+}
+
+.radial-bg {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(139,92,246,0.25), transparent);
+  filter: blur(80px);
+  z-index: -1;
+}
