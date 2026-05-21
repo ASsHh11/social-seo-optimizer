@@ -1,5 +1,5 @@
 import "./globals.css";
-import ContactButton from "@/components/ContactButton";
+import ContactButton from "../components/ContactButton";
 
 // GOOGLE ALGORITHM DOMINANCE META ENGINE - FULLY LOADED
 export const metadata = {
