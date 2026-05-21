@@ -1,12 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import HeroSection from "@/components/HeroSection";
-import PlatformSelector from "@/components/PlatformSelector";
-import UploadZone from "@/components/UploadZone";
-import GenerateButton from "@/components/GenerateButton";
-import LoadingOverlay from "@/components/LoadingOverlay";
-import ResultsTabs from "@/components/ResultsTabs";
+// ... baki imports same rahengi
 
 export default function HomePage() {
   const [idea, setIdea] = useState("");
@@ -16,123 +11,60 @@ export default function HomePage() {
   const [results, setResults] = useState(null);
   const [error, setError] = useState("");
 
+  // Naya Helper: Video/Image ko Base64 mein badalne ke liye
+  const processMedia = (file) => {
+    return new Promise((resolve, reject) => {
+      if (file.type.startsWith("video/")) {
+        const video = document.createElement("video");
+        video.src = URL.createObjectURL(file);
+        video.muted = true;
+        video.playsInline = true;
+        
+        video.onloadeddata = () => { video.currentTime = 1; }; // 1st second ka frame
+        video.onseeked = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+          resolve({ mimeType: "image/jpeg", data: canvas.toDataURL("image/jpeg").split(",")[1] });
+        };
+        video.onerror = reject;
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => resolve({ mimeType: file.type, data: reader.result.split(",")[1] });
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      }
+    });
+  };
+
   const generateContent = async () => {
-    if (!idea.trim()) {
-      setError("Please describe your content idea.");
-      return;
-    }
+    if (!idea.trim()) return setError("Please describe your idea.");
+    if (platforms.length === 0) return setError("Select a platform.");
 
-    if (platforms.length === 0) {
-      setError("Please select at least one platform.");
-      return;
-    }
-
-    setError("");
-    setResults(null);
     setLoading(true);
+    setError("");
 
     try {
       let mediaPayload = null;
-
       if (file) {
-        const { prepareMediaPayload } = await import("@/lib/ffmpeg");
-        mediaPayload = await prepareMediaPayload(file);
+        mediaPayload = await processMedia(file); // Yahan Canvas logic chalega
       }
 
       const response = await fetch("/api/generate", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          idea,
-          platforms,
-          media: mediaPayload
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idea, platforms, media: mediaPayload })
       });
 
       const data = await response.json();
-
-      if (!response.ok || data?.error) {
-        setError(data?.message || "Something went wrong while generating content.");
-        setResults(null);
-        return;
-      }
-
+      if (!response.ok) throw new Error(data.message || "Generation failed");
       setResults(data);
     } catch (err) {
-      console.error("Client generate error:", err);
-      setError("Unable to generate content. Please try again.");
-      setResults(null);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <main className="min-h-screen px-6 py-12 relative">
-      {/* Background Glow Animation */}
-      <div className="radial-bg top-0 left-1/2 -translate-x-1/2 animate-glow" />
-
-      {/* GOOGLEBOT VIP ACCESS: 
-        Yeh H1 tag aur descriptive text visually screen par hidden hain ('sr-only' tools aur accessibility crawlers ke liye).
-        Google ka algorithm isko parhte hi samajh jaye gaa ke yeh page kis category ka king hai.
-      */}
-      <div className="sr-only">
-        <h1>AlgoHack | Free AI Social SEO Optimizer & Hook Generator</h1>
-        <h2>Automated Social Media Copywriting, Viral Hooks, and Hashtags</h2>
-        <p>
-          Optimize your digital presence across LinkedIn, Instagram, and Twitter. 
-          Analyze media files, extract context, and generate high-engagement, 
-          SEO-friendly social media copies instantly using advanced AI automation.
-        </p>
-      </div>
-
-      {/* Main Visible Hero Component */}
-      <HeroSection />
-
-      {/* Main Dynamic Application Interface */}
-      <div className="max-w-5xl mx-auto mt-16 glass rounded-3xl p-8 space-y-10">
-        <div>
-          <label htmlFor="content-idea-input" className="text-sm text-violet-300 mb-3 block font-medium tracking-wide">
-            STEP 1 — Describe Your Post Idea
-          </label>
-
-          <textarea
-            id="content-idea-input"
-            value={idea}
-            onChange={(e) => setIdea(e.target.value)}
-            placeholder="Describe your content idea for LinkedIn, Instagram, or Twitter to generate viral hooks and SEO optimized posts..."
-            className="w-full h-40 bg-white/5 rounded-2xl p-5 outline-none border border-white/10 focus:border-violet-500 text-white placeholder-white/30 transition-all duration-300"
-          />
-        </div>
-
-        {/* Media Upload Sub-system */}
-        <UploadZone file={file} setFile={setFile} />
-
-        {/* Multi-Platform Core Selection */}
-        <PlatformSelector selected={platforms} setSelected={setPlatforms} />
-
-        {/* Heavy Lifting Trigger */}
-        <GenerateButton onClick={generateContent} loading={loading} />
-      </div>
-
-      {/* Error Management Feed */}
-      {error && (
-        <div className="max-w-5xl mx-auto mt-6 text-center text-red-400 font-medium bg-red-500/10 border border-red-500/20 py-3 px-6 rounded-2xl animate-fade-in">
-          {error}
-        </div>
-      )}
-
-      {/* Global Interactive Async State Overlays */}
-      {loading && <LoadingOverlay />}
-
-      {/* Rich Generative Outputs Block */}
-      {results && !error && (
-        <div className="mt-16 animate-fade-in">
-          <ResultsTabs data={results} />
-        </div>
-      )}
-    </main>
-  );
-}
+  // ... baki JSX same rahega
