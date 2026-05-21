@@ -1,4 +1,5 @@
 import "./globals.css";
+import ContactButton from "@/components/ContactButton";
 
 // GOOGLE ALGORITHM DOMINANCE META ENGINE - FULLY LOADED
 export const metadata = {
@@ -43,6 +44,20 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="antialiased bg-[#030014] text-white selection:bg-violet-500/30">
         {children}
+
+        <footer className="w-full border-t border-white/10 mt-12 py-8 bg-[#030014]">
+          <div className="max-w-6xl mx-auto px-6 flex flex-col items-center gap-6 text-center sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm text-slate-300">© 2026 TrendHack. Built for creators who want smart SEO and viral growth.</p>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <a href="/privacy" className="text-slate-200 transition hover:text-white">Privacy Policy</a>
+              <a href="/terms" className="text-slate-200 transition hover:text-white">Terms of Service</a>
+              <ContactButton />
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   );
