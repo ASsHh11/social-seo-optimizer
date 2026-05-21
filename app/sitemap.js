@@ -2,9 +2,9 @@ export default async function sitemap() {
   return [
     {
       url: 'https://trendhack.vercel.app',
-      lastModified: new Date().toISOString(), // Date ko ISO string format mein bhejna zyada stable hota hai
+      lastModified: '2026-05-21',
       changeFrequency: 'daily',
-      priority: 1,
+      priority: 1.0,
     },
   ];
 }
