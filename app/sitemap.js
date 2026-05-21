@@ -1,10 +1,10 @@
 export default async function sitemap() {
   return [
     {
-      url: 'https://algohack.netlify.app',
+      url: 'https://trendhack.vercel.app',
       lastModified: new Date(),
       changeFrequency: 'daily',
-      priority: 1.0,
+      priority: 1,
     },
   ];
 }
