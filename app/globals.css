@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  background: #0B0F19;
+  background: #030014;
   color: white;
   overflow-x: hidden;
 }
@@ -20,9 +20,53 @@ body {
 
 .radial-bg {
   position: absolute;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(139,92,246,0.25), transparent);
-  filter: blur(80px);
+  width: 680px;
+  height: 680px;
+  background: radial-gradient(circle, rgba(99,102,241,0.18), rgba(168,85,247,0.08), transparent 60%);
+  filter: blur(90px);
   z-index: -1;
+}
+
+/* Hide Next.js in-browser devtools indicator/overlay in development preview
+   This removes the floating "N" badge and related devtools panels when present.
+   It's safe to keep in production since these elements only exist in dev. */
+[data-nextjs-devtools-menu],
+[data-nextjs-devtools-panel-overlay],
+.dev-tools-indicator-footer,
+[data-nextjs-error-overlay-footer],
+/* generic fallbacks */
+#nextjs-dev-tools-menu,
+.instant-nav-footer,
+.instant-nav-footer-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Additional broad rules to hide Next.js devtools / extension indicators */
+.next-devtools,
+.next-devtools-indicator,
+.next-devtools-badge,
+.devtools-indicator,
+.dev-tools-indicator,
+[data-nextjs-devtools],
+[data-nextjs-dev-tools],
+[data-nextjs-devtools-menu],
+[data-nextjs-devtools-panel-overlay],
+[data-nextjs-devtools-panel-footer],
+[data-nextjs-devtools-panel],
+[data-nextjs-error-overlay],
+[data-nextjs-error-overlay-footer],
+[data-nextjs-panel] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Also hide small fixed circular badges commonly injected by extensions/devtools */
+button[aria-label*="Next"],
+div[aria-label*="Next"],
+button[title*="Next"],
+div[title*="Next"] {
+  display: none !important;
+  visibility: hidden !important;
 }
