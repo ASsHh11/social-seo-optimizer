@@ -1,8 +1,11 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Social SEO Optimizer",
-  description: "AI-powered viral post optimization"
+  title: "AlgoHack - AI Social SEO Optimizer",
+  description: "Crack the social media algorithm using advanced AI SEO insights.",
+  verification: {
+    google: "nqGq8akKknGolsiHPLnc0QWYKgXk4Hj8TDIYs0mvcDk",
+  },
 };
 
 export default function RootLayout({ children }) {
