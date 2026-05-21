@@ -35,8 +35,8 @@ export default function HomePage() {
       let mediaPayload = null;
 
       if (file) {
-        const { extractAudio } = await import("@/lib/ffmpeg");
-        mediaPayload = await extractAudio(file);
+        const { prepareMediaPayload } = await import("@/lib/ffmpeg");
+        mediaPayload = await prepareMediaPayload(file);
       }
 
       const response = await fetch("/api/generate", {
