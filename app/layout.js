@@ -15,9 +15,9 @@ export const metadata = {
   authors: [{ name: "Arslan Ash" }],
   creator: "Arslan Ash",
   
-  // Google Webmaster Verification Key
+  // Google Webmaster Verification Key (UPDATED)
   verification: {
-    google: "PJylu-qiqpoDVCEcLKQePB9LnkIZIdPWgpG89yDeM-U",
+    google: "2tfWnKOIdDW-snYB8QazRZ5AKma2iESdJctJs9cqmt0",
   },
 
   // OpenGraph Link Previews Protocol
