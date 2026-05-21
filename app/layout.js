@@ -1,5 +1,4 @@
 import "./globals.css";
-import ContactButton from "../components/ContactButton";
 
 // GOOGLE ALGORITHM DOMINANCE META ENGINE - FULLY LOADED
 export const metadata = {
@@ -16,7 +15,7 @@ export const metadata = {
   authors: [{ name: "Arslan Ash" }],
   creator: "Arslan Ash",
   
-  // Google Webmaster Verification Key (UPDATED)
+  // Google Webmaster Verification Key
   verification: {
     google: "2tfWnKOIdDW-snYB8QazRZ5AKma2iESdJctJs9cqmt0",
   },
@@ -54,7 +53,12 @@ export default function RootLayout({ children }) {
             <div className="flex items-center gap-4">
               <a href="/privacy" className="text-slate-200 transition hover:text-white">Privacy Policy</a>
               <a href="/terms" className="text-slate-200 transition hover:text-white">Terms of Service</a>
-              <ContactButton />
+              <a 
+                href={`mailto:${'moonsoon786110'}@${'gmail.com'}`} 
+                className="text-slate-200 transition hover:text-violet-400 font-medium"
+              >
+                Contact
+              </a>
             </div>
           </div>
         </footer>
